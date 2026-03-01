@@ -18,7 +18,11 @@ supabase = create_client(
 FEEDS = [
     {"journal": "Management Science", "category": "OM/IS", "url": "https://pubsonline.informs.org/action/showFeed?type=etoc&feed=rss&jc=mnsc"},
     {"journal": "Information Systems Research", "category": "OM/IS", "url": "https://pubsonline.informs.org/action/showFeed?type=etoc&feed=rss&jc=isre"},
-    {"journal": "Marketing Science", "category": "Marketing", "url": "https://pubsonline.informs.org/action/showFeed?type=etoc&feed=rss&jc=mksc"},
+    {"journal": "Production and Operations Management", "category": "OM/IS", "url": "https://onlinelibrary.wiley.com/action/showFeed?jc=19375956&type=etoc&feed=rss"},
+    {"journal": "Journal of Operations Management", "category": "OM/IS", "url": "https://onlinelibrary.wiley.com/action/showFeed?jc=18731317&type=etoc&feed=rss"},
+    {"journal": "MSOM", "category": "OM/IS", "url": "https://pubsonline.informs.org/action/showFeed?type=etoc&feed=rss&jc=msom"},
+    {"journal": "Journal of MIS", "category": "OM/IS", "url": "https://www.tandfonline.com/feed/rss/mmis20"},
+    {"journal": "Journal of AIS", "category": "OM/IS", "url": "https://aisel.aisnet.org/jais/recent_rss.xml"},
     {"journal": "arXiv (cs.IR)", "category": "CS/AI", "url": "https://rss.arxiv.org/rss/cs.IR"},
     {"journal": "arXiv (econ.GN)", "category": "Economics", "url": "https://rss.arxiv.org/rss/econ.GN"},
 ]
@@ -89,7 +93,7 @@ def fetch_feed(feed_config):
                 continue
             doi = extract_doi(entry)
             abstract = extract_abstract(entry)
-            if len(abstract) < 80 and doi:
+            if len(abstract) < 300 and doi:
                 abstract = fetch_abstract_crossref(doi)
                 if abstract:
                     print(f"      📖 Got abstract via CrossRef")
