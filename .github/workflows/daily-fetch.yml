@@ -1,0 +1,32 @@
+name: Daily Paper Fetch
+
+on:
+  schedule:
+    # Runs at 08:00 UTC every day (4pm Beijing time)
+    - cron: "0 8 * * *"
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install feedparser supabase python-dotenv requests
+
+      - name: Run fetcher
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          python scripts/fetch_papers.py
